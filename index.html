@@ -12,8 +12,8 @@ questApp.controller('AnswerController',
 		$scope.res="";
         $scope.save = function (person, resultForm){		
 			{
-				var red="#ffcccc";
-				var green="#ccffcc";
+				var red="red";
+				var green="green";
 				if(person.surname===undefined)
 					changeColor("surname", red);
 				else
@@ -72,7 +72,7 @@ questApp.controller('AnswerController',
 });
 function changeColor(elem,color)
 {
-	$("#" + elem).css("background-color",color);
+	$("#" + elem).css("border-color",color);
 }
 </script>
 </head>
