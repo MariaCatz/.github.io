@@ -1,0 +1,59 @@
+.headers
+{
+	background-color:#d9edf6;
+	color:#578a9f;
+	padding:6px;
+	border-radius: 2.3px;
+	
+}
+.btn
+{
+	background-color:#5bb762;
+	color:#c2f7c7;
+	padding:3px 10px;
+	border-width: 0px;
+	position: relative;
+	left: 713px;
+}
+ul 
+{
+	list-style-type: none;
+	margin:0px;
+	padding:0px;
+}
+li 
+{
+	padding:10px;
+	text-align:right;
+	border-width:0.2px;
+	border-color:#e4e4e4;
+	border-style:dotted;
+}
+form
+{
+	margin:15px;
+	width:800px;
+	border-style:dotted;
+	border-color:#e4e4e4;
+	border-width:1.3px;
+
+}
+input,textarea
+{
+	background-color:#eeeeee;
+	border-width:1.3px;
+	border-color:#e4e4e4;
+	border-style:solid;
+	border-radius: 2.3px;
+	width:300px;
+	max-width:300px;
+}
+table
+{
+	height:100%;
+	width:100%;
+	border-color:#e4e4e4;
+	border-style:solid;
+	border-radius: 2.3px;
+	text-align:right;
+}

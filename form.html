@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html ng-app="questApp">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var questApp = angular.module('questApp', []);
+questApp.controller('AnswerController', 
+    function AnswerController($scope){
+		$scope.res="";
+        $scope.save = function (person, resultForm){		
+			{
+				var red="#ffcccc";
+				var green="#ccffcc";
+				if(person.surname===undefined)
+					changeColor("surname", red);
+				else
+					changeColor("surname", green);
+				if(person.name===undefined)
+					changeColor("name", red);
+				else
+					changeColor("name", green);
+				if(person.patronymic===undefined)
+					changeColor("patronymic", red);
+				else
+					changeColor("patronymic", green);
+				if(person.SNILS===undefined)
+					changeColor("SNILS", red);
+				else
+					changeColor("SNILS", green);
+				if(person.DateofBirth===undefined)
+					changeColor("DateofBirth", red);
+				else
+					changeColor("DateofBirth", green);
+				if(person.DataAvailability===undefined)
+					changeColor("DataAvailability", red);
+				else
+					changeColor("DataAvailability", green);
+				if(person.year===undefined)
+					changeColor("year", red);
+				else
+					changeColor("year", green);
+				if(person.month===undefined)
+					changeColor("month", red);
+				else
+					changeColor("month", green);
+				if(person.day===undefined)
+					changeColor("day", red);
+				else
+					changeColor("day", green);
+			}
+            if(resultForm.$valid==true)
+			{
+				$scope.res='<?xml version="1.0" encoding="utf-8"?>'+'\n';
+				$scope.res+='<ЗАПРОС_СВЕДЕНИЙ_О_СТРАХОВОМ_СТАЖЕ>'+'\n';
+				$scope.res+='<Фамилия>'+person.surname+'</Фамилия>'+'\n';
+				$scope.res+='<Имя>'+person.name+'</Имя>'+'\n';
+				if(person.patronymic!="")
+					$scope.res+='<Отчество>'+person.patronymic+'</Отчество>'+'\n';
+				$scope.res+='<СНИЛС>'+person.SNILS+'</СНИЛС>'+'\n';
+				$scope.res+='<ДатаРождения>'+person.DateofBirth+'</ДатаРождения>'+'\n';
+				$scope.res+='<НаличиеДанных>'+person.DataAvailability+'</НаличиеДанных>'+'\n';
+				$scope.res+='<ОбщаяПродолжительностьСтраховогоСтажаНаДатуОбращенияГражданинаВОСЗ>'+'\n';
+				$scope.res+='<ОбщаяПродолжительностьСтраховогоСтажаЛет>'+person.year+'</ОбщаяПродолжительностьСтраховогоСтажаЛет>'+'\n';
+				$scope.res+='<ОбщаяПродолжительностьСтраховогоСтажаМесяцев>'+person.month+'</ОбщаяПродолжительностьСтраховогоСтажаМесяцев>'+'\n';
+				$scope.res+='<ОбщаяПродолжительностьСтраховогоСтажаДней>'+person.day+'</ОбщаяПродолжительностьСтраховогоСтажаДней>'+'\n';
+				$scope.res+='</ОбщаяПродолжительностьСтраховогоСтажаНаДатуОбращенияГражданинаВОСЗ>';
+            }
+        };
+});
+function changeColor(elem,color)
+{
+	$("#" + elem).css("background-color",color);
+}
+</script>
+</head>
+<body ng-controller="AnswerController">
+<form name="resultForm">
+<ul>
+<p class="headers">Форма запроса</p>
+<li>Фамилия
+<input type="text" id="surname" ng-model="person.surname" required ng-minlength=1 ng-maxlength=40></li>
+<li>Имя
+<input type="text" id="name" ng-model="person.name" required ng-minlength=1 ng-maxlength=40></li>
+<li>Отчество
+<input type="text" id="patronymic" ng-model="person.patronymic" ng-maxlength=40></li>
+<li>СНИЛС
+<input type="text" id="SNILS" ng-model="person.SNILS" required ng-pattern="/^\d{3}-\d{3}-\d{3} \d{2}$/"></li>
+<li>Дата рождения
+<input type="text" id="DateofBirth" ng-model="person.DateofBirth" required ng-pattern="/^\d{2}.\d{2}.\d{4}$/"></li>
+<li>Наличие данных
+<input list="yesNo" id="DataAvailability" ng-model="person.DataAvailability" required ng-pattern="/^(ДА|НЕТ)$/"><datalist id="yesNo"><option value="ДА"><option value="НЕТ"></datalist></li>
+<p class="headers">Общая продолжительность страхового стажа на дату обращения гражданина</p>
+<li>Общая продолжительность страхового стажа лет
+<input type="number" id="year" ng-model="person.year" required min=0 max=999></li>
+<li>Общая продолжительность страхового стажа месяцев
+<input type="number" id="month" ng-model="person.month" required min=0 max=99></li>
+<li>Общая продолжительность страхового стажа дней
+<input type="number" id="day" ng-model="person.day" required min=0 max=99></li>
+<button class="btn" ng-click="save(person, resultForm)">Сохранить</button>
+<p class="headers">Итоговый запрос</p>
+<table>
+  <tr>
+  <col width="500px">
+    <td>Запрос</td> 
+	<td><textarea name="Запрос">{{res}}</textarea></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>
