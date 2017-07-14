@@ -6,6 +6,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script>
 
 
 <script>
@@ -48,32 +49,48 @@ function changeColor(elem,color)
 {
 	$("#" + elem).css("border-color",color);
 }
+
+  // execute your scripts when the DOM is ready. this is a good habit
+  $(function() {
+
+        // select all desired input fields and attach tooltips to them
+      $("#DateofBirth").tooltip({
+
+      // place tooltip on the right edge
+      position: "center right",
+
+      // a little tweaking of the position
+      offset: [-2, 10],
+
+      // use the built-in fadeIn/fadeOut effect
+      effect: "fade",
+
+      // custom opacity setting
+      opacity: 0.7
+
+      });
+	   $("#SNILS").tooltip({
+
+      // place tooltip on the right edge
+      position: "center right",
+
+      // a little tweaking of the position
+      offset: [-2, 10],
+
+      // use the built-in fadeIn/fadeOut effect
+      effect: "fade",
+
+      // custom opacity setting
+      opacity: 0.7
+
+      });
+    });
+
 </script>
-<script>$(window).on('load', function() {
-// Подсказка только для текста атрибута title
-$('.jtooltip').hover(function(){
-        // наведение курсора
-        var title = $(this).attr('title');
-        $(this).data('tipText', title).removeAttr('title');
-        $('<p class="tooltip"></p>')
-        .text(title)
-        .appendTo('body')
-        .fadeIn('slow');
-}, function() {
-        // убранный курсор
-        $(this).attr('title', $(this).data('tipText'));
-        $('.tooltip').remove();
-}).mousemove(function(e) {
-        var mousex = e.pageX + 20; // получить координаты курсора по оси x
-        var mousey = e.pageY + 10; // получить координаты курсора по оси y
-        $('.tooltip')
-        .css({ top: mousey, left: mousex })
-});
-});</script>
 </head>
 <body ng-controller="AnswerController">
 <form name="resultForm">
-<ul>
+<ul id="inputs">
 <p class="headers">Форма запроса</p>
 <li>Фамилия
 <input type="text" id="surname" ng-model="person.surname" required ng-minlength=1 ng-maxlength=40 ></li>
@@ -83,11 +100,15 @@ $('.jtooltip').hover(function(){
 <input type="text" id="patronymic" ng-model="person.patronymic" ng-maxlength=40></li>
 <li>СНИЛС
 <input type="text" id="SNILS" ng-model="person.SNILS" required ng-pattern="/^\d{3}-\d{3}-\d{3} \d{2}$/" title="Введите страховой номер 
-индивидуального лицевого счёта в формате ццц-ццц-ццц цц "></li>
+индивидуального лицевого счёта в формате ццц-ццц-ццц цц " ></li>
 <li>Дата рождения
-<input type="text" id="DateofBirth" ng-model="person.DateofBirth" required ng-pattern="/^\d{2}.\d{2}.\d{4}$/" title="Введите дату рождения в формате цц.цц.цццц"></li>
+<input type="text" id="DateofBirth" ng-model="person.DateofBirth" required ng-pattern="/^\d{2}.\d{2}.\d{4}$/" title="Введите дату рождения в формате цц.цц.цццц" >
+</li>
 <li>Наличие данных
-<input list="yesNo" id="DataAvailability" ng-model="person.DataAvailability" required ng-pattern="/^(ДА|НЕТ)$/"><datalist id="yesNo"><option value="ДА"><option value="НЕТ"></datalist></li>
+<select ng-model="person.DataAvailability" required>
+<option value="ДА" >ДА</option>
+<option value="НЕТ">НЕТ</option>
+</select></li>
 <p class="headers">Общая продолжительность страхового стажа на дату обращения гражданина</p>
 <li>Общая продолжительность страхового стажа лет
 <input type="number" id="year" ng-model="person.year" required min=0 max=999></li>
