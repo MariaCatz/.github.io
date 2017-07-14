@@ -6,8 +6,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script>
-
 
 <script>
 var questApp = angular.module('questApp', []);
@@ -17,9 +15,7 @@ questApp.controller('AnswerController',
 $("input").blur(function(eventObject) {
 	var inp=eventObject.target.id;
 	if($scope.person[inp]===undefined)
-		{
 			changeColor(inp,"red");
-		}
 	else
 		changeColor(inp,"green");
 });
@@ -49,48 +45,11 @@ function changeColor(elem,color)
 {
 	$("#" + elem).css("border-color",color);
 }
-
-  // execute your scripts when the DOM is ready. this is a good habit
-  $(function() {
-
-        // select all desired input fields and attach tooltips to them
-      $("#DateofBirth").tooltip({
-
-      // place tooltip on the right edge
-      position: "center right",
-
-      // a little tweaking of the position
-      offset: [-2, 10],
-
-      // use the built-in fadeIn/fadeOut effect
-      effect: "fade",
-
-      // custom opacity setting
-      opacity: 0.7
-
-      });
-	   $("#SNILS").tooltip({
-
-      // place tooltip on the right edge
-      position: "center right",
-
-      // a little tweaking of the position
-      offset: [-2, 10],
-
-      // use the built-in fadeIn/fadeOut effect
-      effect: "fade",
-
-      // custom opacity setting
-      opacity: 0.7
-
-      });
-    });
-
 </script>
 </head>
 <body ng-controller="AnswerController">
 <form name="resultForm">
-<ul id="inputs">
+<ul >
 <p class="headers">Форма запроса</p>
 <li>Фамилия
 <input type="text" id="surname" ng-model="person.surname" required ng-minlength=1 ng-maxlength=40 ></li>
