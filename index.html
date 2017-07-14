@@ -14,7 +14,7 @@ questApp.controller('AnswerController',
 	
 $("input").blur(function(eventObject) {
 	var inp=eventObject.target.id;
-	if($scope.person[inp]===undefined)
+	if(($scope.person[inp]===undefined)&&(inp!="patronymic"))
 			changeColor(inp,"red");
 	else
 		changeColor(inp,"green");
@@ -28,7 +28,7 @@ $("input").blur(function(eventObject) {
 				$scope.res+='<ЗАПРОС_СВЕДЕНИЙ_О_СТРАХОВОМ_СТАЖЕ>'+'\n';
 				$scope.res+='<Фамилия>'+person.surname+'</Фамилия>'+'\n';
 				$scope.res+='<Имя>'+person.name+'</Имя>'+'\n';
-				if(person.patronymic!="")
+				if((person.patronymic!="")&&(person.patronymic!==undefined))
 					$scope.res+='<Отчество>'+person.patronymic+'</Отчество>'+'\n';
 				$scope.res+='<СНИЛС>'+person.SNILS+'</СНИЛС>'+'\n';
 				$scope.res+='<ДатаРождения>'+person.DateofBirth+'</ДатаРождения>'+'\n';
