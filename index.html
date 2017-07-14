@@ -3,54 +3,28 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="style.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
 <script>
 var questApp = angular.module('questApp', []);
 questApp.controller('AnswerController', 
     function AnswerController($scope){
+	
+$("input").blur(function(eventObject) {
+	var inp=eventObject.target.id;
+	if($scope.person[inp]===undefined)
+		{
+			changeColor(inp,"red");
+		}
+	else
+		changeColor(inp,"green");
+});
+
 		$scope.res="";
         $scope.save = function (person, resultForm){		
-			{
-				var red="red";
-				var green="green";
-				if(person.surname===undefined)
-					changeColor("surname", red);
-				else
-					changeColor("surname", green);
-				if(person.name===undefined)
-					changeColor("name", red);
-				else
-					changeColor("name", green);
-				if(person.patronymic===undefined)
-					changeColor("patronymic", red);
-				else
-					changeColor("patronymic", green);
-				if(person.SNILS===undefined)
-					changeColor("SNILS", red);
-				else
-					changeColor("SNILS", green);
-				if(person.DateofBirth===undefined)
-					changeColor("DateofBirth", red);
-				else
-					changeColor("DateofBirth", green);
-				if(person.DataAvailability===undefined)
-					changeColor("DataAvailability", red);
-				else
-					changeColor("DataAvailability", green);
-				if(person.year===undefined)
-					changeColor("year", red);
-				else
-					changeColor("year", green);
-				if(person.month===undefined)
-					changeColor("month", red);
-				else
-					changeColor("month", green);
-				if(person.day===undefined)
-					changeColor("day", red);
-				else
-					changeColor("day", green);
-			}
             if(resultForm.$valid==true)
 			{
 				$scope.res='<?xml version="1.0" encoding="utf-8"?>'+'\n';
@@ -75,21 +49,43 @@ function changeColor(elem,color)
 	$("#" + elem).css("border-color",color);
 }
 </script>
+<script>$(window).on('load', function() {
+// Подсказка только для текста атрибута title
+$('.jtooltip').hover(function(){
+        // наведение курсора
+        var title = $(this).attr('title');
+        $(this).data('tipText', title).removeAttr('title');
+        $('<p class="tooltip"></p>')
+        .text(title)
+        .appendTo('body')
+        .fadeIn('slow');
+}, function() {
+        // убранный курсор
+        $(this).attr('title', $(this).data('tipText'));
+        $('.tooltip').remove();
+}).mousemove(function(e) {
+        var mousex = e.pageX + 20; // получить координаты курсора по оси x
+        var mousey = e.pageY + 10; // получить координаты курсора по оси y
+        $('.tooltip')
+        .css({ top: mousey, left: mousex })
+});
+});</script>
 </head>
 <body ng-controller="AnswerController">
 <form name="resultForm">
 <ul>
 <p class="headers">Форма запроса</p>
 <li>Фамилия
-<input type="text" id="surname" ng-model="person.surname" required ng-minlength=1 ng-maxlength=40></li>
+<input type="text" id="surname" ng-model="person.surname" required ng-minlength=1 ng-maxlength=40 ></li>
 <li>Имя
 <input type="text" id="name" ng-model="person.name" required ng-minlength=1 ng-maxlength=40></li>
 <li>Отчество
 <input type="text" id="patronymic" ng-model="person.patronymic" ng-maxlength=40></li>
 <li>СНИЛС
-<input type="text" id="SNILS" ng-model="person.SNILS" required ng-pattern="/^\d{3}-\d{3}-\d{3} \d{2}$/"></li>
+<input type="text" id="SNILS" ng-model="person.SNILS" required ng-pattern="/^\d{3}-\d{3}-\d{3} \d{2}$/" title="Введите страховой номер 
+индивидуального лицевого счёта в формате ццц-ццц-ццц цц "></li>
 <li>Дата рождения
-<input type="text" id="DateofBirth" ng-model="person.DateofBirth" required ng-pattern="/^\d{2}.\d{2}.\d{4}$/"></li>
+<input type="text" id="DateofBirth" ng-model="person.DateofBirth" required ng-pattern="/^\d{2}.\d{2}.\d{4}$/" title="Введите дату рождения в формате цц.цц.цццц"></li>
 <li>Наличие данных
 <input list="yesNo" id="DataAvailability" ng-model="person.DataAvailability" required ng-pattern="/^(ДА|НЕТ)$/"><datalist id="yesNo"><option value="ДА"><option value="НЕТ"></datalist></li>
 <p class="headers">Общая продолжительность страхового стажа на дату обращения гражданина</p>
